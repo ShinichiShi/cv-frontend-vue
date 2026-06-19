@@ -134,9 +134,9 @@ function toggleFullscreen() {
 }
 
 function updateProjectButton(selectedOption: string) {
-    promptStore.UpdateProjectDetail.activate = false
+promptStore.UpdateProjectDetail.activate = false
     if (selectedOption == 'cancel') {
-        window.location.href = `/simulatorvue/edit/${promptStore.getProjectId}`
+        window.location.href = `/simulator/edit/${promptStore.getProjectId}`
     }
     if (selectedOption == 'openEditPage') {
         window.location.href = `/users/${useAuthStore().getUserId}/projects/${
