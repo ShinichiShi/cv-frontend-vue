@@ -1,11 +1,12 @@
 import { open } from "@tauri-apps/plugin-shell";
+import { fetch } from "@tauri-apps/plugin-http";
 import { generateCodeChallenge, generateCodeVerifier, generateState } from "#/utils/pkce";
 
 const REDIRECT_URI = "circuitverse://auth";
 const OAUTH_SCOPE = "public profile email";
 
 function circuitVerseOrigin(): string {
-  return import.meta.env.VITE_CIRCUITVERSE_ORIGIN || "https://circuitverse.org";
+  return import.meta.env.VITE_CIRCUITVERSE_ORIGIN || "http://localhost:3000";
 }
 
 function clientId(): string {
