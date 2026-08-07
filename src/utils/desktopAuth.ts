@@ -6,7 +6,7 @@ const REDIRECT_URI = "circuitverse://auth";
 const OAUTH_SCOPE = "public profile email";
 
 function circuitVerseOrigin(): string {
-  return import.meta.env.VITE_CIRCUITVERSE_ORIGIN || "http://localhost:3000";
+  return import.meta.env.VITE_CIRCUITVERSE_ORIGIN || "https://circuitverse.org";
 }
 
 function clientId(): string {
