@@ -51,7 +51,7 @@
         <template v-if="!authStore.getIsLoggedIn">
           <v-list density="compact" nav>
             <v-list-item
-              @click.stop="showAuthModal(true)"
+              @click.stop="signIn"
               prepend-icon="mdi-login"
               title="Sign In"
               value="sign_in"
@@ -59,7 +59,7 @@
               color="white"
             ></v-list-item>
             <v-list-item
-              @click.stop="showAuthModal(false)"
+              @click.stop="register"
               prepend-icon="mdi-account-plus"
               title="Register"
               value="register"
@@ -237,8 +237,10 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { isTauri } from '@tauri-apps/api/core'
 import { availableLocale } from '#/locales/i18n'
 import { useAuthStore } from '#/store/authStore'
+import { startDesktopSignIn } from '#/utils/desktopAuth'
 import { mdiClose } from '@mdi/js'
 // import { fetch } from '@tauri-apps/plugin-http' // Uncomment if using Tauri's HTTP plugin
 import './User.scss'
@@ -266,6 +268,32 @@ const snackbar = ref({
   message: '',
   color: '#43b984'
 })
+
+async function signIn() {
+  if (isTauri()) {
+    console.log('[UserMenu] signIn clicked in Tauri, starting desktop OAuth flow')
+    drawer.value = false
+    try {
+      await startDesktopSignIn()
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error)
+      console.error('[UserMenu] startDesktopSignIn threw:', error)
+      showSnackbar(`Unable to start sign in: ${message}`, 'error')
+    }
+    return
+  }
+
+  showAuthModal(true)
+}
+
+async function register() {
+  if (isTauri()) {
+    console.log('[UserMenu] register clicked in Tauri, reusing the desktop OAuth flow')
+    return signIn()
+  }
+
+  showAuthModal(false)
+}
 
 function showAuthModal(login: boolean) {
   isLoginMode.value = login
