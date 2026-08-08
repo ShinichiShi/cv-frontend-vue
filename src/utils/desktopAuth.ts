@@ -1,4 +1,5 @@
 import { open } from "@tauri-apps/plugin-shell";
+import { fetch } from "@tauri-apps/plugin-http";
 import { generateCodeChallenge, generateCodeVerifier, generateState } from "#/utils/pkce";
 
 const REDIRECT_URI = "circuitverse://auth";

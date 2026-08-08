@@ -59,7 +59,7 @@
               color="white"
             ></v-list-item>
             <v-list-item
-              @click.stop="showAuthModal(false)"
+              @click.stop="register"
               prepend-icon="mdi-account-plus"
               title="Register"
               value="register"
@@ -284,6 +284,15 @@ async function signIn() {
   }
 
   showAuthModal(true)
+}
+
+async function register() {
+  if (isTauri()) {
+    console.log('[UserMenu] register clicked in Tauri, reusing the desktop OAuth flow')
+    return signIn()
+  }
+
+  showAuthModal(false)
 }
 
 function showAuthModal(login: boolean) {

@@ -22,6 +22,9 @@
         },
         {
           "url": "https://circuitverse.org/oauth/token"
+        },
+        {
+          "url": "http://localhost:3000/oauth/token"
         }
       ]
     },

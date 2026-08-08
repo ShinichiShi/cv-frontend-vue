@@ -64,6 +64,7 @@ export default defineConfig(() => {
       },
     },
     root: fileURLToPath(new URL(`./${version}`, import.meta.url)),
+    envDir: fileURLToPath(new URL(".", import.meta.url)),
     base: process.env.VITE_BASE || (isDesktop ? "/" : `/simulatorvue/${version}/`),
     build: {
       outDir: fileURLToPath(new URL(`./dist/simulatorvue/${version}/`, import.meta.url)),
